@@ -1,4 +1,12 @@
 package br.com.univille.germoneys.service;
 
+import br.com.univille.germoneys.entity.Product;
+
+import java.util.List;
+
 public interface ProductService {
+    void save(Product product);
+    Product getById(long id);
+    List<Product> getAll();
+    Product delete(long id);
 }
