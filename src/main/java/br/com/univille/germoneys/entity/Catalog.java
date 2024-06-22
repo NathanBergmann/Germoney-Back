@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -15,14 +16,14 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Catalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length = 255,nullable = false)
+    @Column(length = 255, nullable = false)
     private String name;
-    @Column(nullable = true)
-    private BigDecimal price;
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
     @Column(nullable = false)
     private Boolean active = true;
 }

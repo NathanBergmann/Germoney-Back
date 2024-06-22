@@ -17,25 +17,27 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getClientes(){
+    public ResponseEntity<List<Product>> getProducts(){
         var productList  = service.getAll();
         return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Product product){
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Product> post(@RequestBody Product product){
+    public ResponseEntity<Product> save(@RequestBody Product product){
         if(product.getId() == 0){
             service.save(product);
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Product> put(@PathVariable long id,
+    public ResponseEntity<Product> update(@PathVariable long id,
                                        @RequestBody Product product){
         var oldProduct = service.getById(id);
         if(oldProduct == null){
@@ -44,6 +46,7 @@ public class ProductController {
 
         oldProduct.setName(product.getName());
         oldProduct.setPrice(product.getPrice());
+        oldProduct.setActive(product.getActive());
 
 
         service.save(oldProduct);
