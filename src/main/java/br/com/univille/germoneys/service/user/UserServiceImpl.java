@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,6 +31,7 @@ public class UserServiceImpl {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Override
     public void create(UserCreationDto userCreationDto) {
         final User newUser = UserMapper.of(userCreationDto);
 
@@ -40,6 +41,7 @@ public class UserServiceImpl {
         this.userRepository.save(newUser);
     }
 
+    @Override
     public UserTokenDto authenticate(UserLoginDto userLoginDto) {
 
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
@@ -58,5 +60,10 @@ public class UserServiceImpl {
         final String token = jwtTokenManager.generateToken(authentication);
 
         return UserMapper.of(authenticatedUser, token);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }

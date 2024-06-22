@@ -60,7 +60,8 @@ public class JwtTokenManager {
         return Jwts.parserBuilder()
                 .setSigningKey(parseSecret())
                 .build()
-                .parseClaimsJws(token).getBody();
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey parseSecret() {

@@ -1,6 +1,6 @@
 package br.com.univille.germoneys.controller;
 
-import br.com.univille.germoneys.service.user.UserServiceImpl;
+import br.com.univille.germoneys.service.user.UserService;
 import br.com.univille.germoneys.service.user.auth.dto.UserLoginDto;
 import br.com.univille.germoneys.service.user.auth.dto.UserTokenDto;
 import br.com.univille.germoneys.service.user.dto.UserCreationDto;
@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @PostMapping
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<Void> criar(@RequestBody @Valid UserCreationDto userCreationDto) {
-        this.userService.create(userCreationDto);
+    public ResponseEntity<Void> save(@RequestBody @Valid UserCreationDto userCreationDto) {
+        userService.create(userCreationDto);
         return ResponseEntity.status(201).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenDto> login(@RequestBody UserLoginDto userLoginDto) {
-        UserTokenDto usuarioTokenDto = this.userService.authenticate(userLoginDto);
+        UserTokenDto userTokenDto = this.userService.authenticate(userLoginDto);
 
-        return ResponseEntity.status(200).body(usuarioTokenDto);
+        return ResponseEntity.status(200).body(userTokenDto);
     }
 }
