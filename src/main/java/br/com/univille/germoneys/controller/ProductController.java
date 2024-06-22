@@ -1,7 +1,7 @@
 package br.com.univille.germoneys.controller;
 
 import br.com.univille.germoneys.entity.Product;
-import br.com.univille.germoneys.service.ProductService;
+import br.com.univille.germoneys.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

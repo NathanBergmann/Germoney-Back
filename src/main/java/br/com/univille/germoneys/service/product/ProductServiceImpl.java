@@ -1,8 +1,7 @@
-package br.com.univille.germoneys.service.impl;
+package br.com.univille.germoneys.service.product;
 
 import br.com.univille.germoneys.entity.Product;
 import br.com.univille.germoneys.repository.ProductRepository;
-import br.com.univille.germoneys.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
