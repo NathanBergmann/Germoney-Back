@@ -8,20 +8,20 @@ import java.util.Collection;
 
 public class UserDetailsDto implements UserDetails {
 
-    private final String nome;
+    private final String name;
 
     private final String email;
 
-    private final String senha;
+    private final String password;
 
     public UserDetailsDto(User user) {
-        this.nome = user.getName();
+        this.name = user.getName();
         this.email = user.getEmail();
-        this.senha = user.getPassword();
+        this.password = user.getPassword();
     }
 
     public String getName() {
-        return nome;
+        return name;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UserDetailsDto implements UserDetails {
 
     @Override
     public String getPassword() {
-        return senha;
+        return password;
     }
 
     @Override
