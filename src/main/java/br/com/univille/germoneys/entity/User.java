@@ -1,7 +1,7 @@
 package br.com.univille.germoneys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product extends BaseEntity {
+public class User extends BaseEntity {
 
-    @Column(length = 255,nullable = false)
     private String name;
-    private int price;
+    private String email;
+    private String password;
 }

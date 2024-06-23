@@ -8,6 +8,7 @@ public class GermoneysApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GermoneysApplication.class, args);
-	}
 
+		System.out.println("Germoneys rodando! Acesse: http://localhost:8080/swagger-ui/index.html");
+	}
 }

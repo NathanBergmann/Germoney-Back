@@ -28,12 +28,12 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> post(@RequestBody Product product){
-        if(product.getId() == 0){
-            service.save(product);
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
-        }
-        return ResponseEntity.badRequest().build();
+        if (product.getId() != null) return ResponseEntity.badRequest().build();
+
+        service.save(product);
+        return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Product> put(@PathVariable long id,
                                        @RequestBody Product product){
