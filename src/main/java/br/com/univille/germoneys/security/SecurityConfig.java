@@ -1,5 +1,9 @@
-package br.com.univille.germoneys.security.jwt;
+package br.com.univille.germoneys.security;
 
+import br.com.univille.germoneys.security.jwt.AuthEntryPoint;
+import br.com.univille.germoneys.security.jwt.AuthFilter;
+import br.com.univille.germoneys.security.jwt.AuthProvider;
+import br.com.univille.germoneys.security.jwt.JwtTokenManager;
 import br.com.univille.germoneys.service.user.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +28,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfiguracao {
+public class SecurityConfig {
 
     @Autowired
     private AuthService authService;
@@ -39,7 +42,7 @@ public class SecurityConfiguracao {
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
-    private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
+    private static final AntPathRequestMatcher[] ALLOWED_URLS = {
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-ui.html"),
             new AntPathRequestMatcher("/swagger-resources"),
@@ -51,9 +54,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/usuarios/login/**"),
-            new AntPathRequestMatcher("/h2-console/**"),
-            new AntPathRequestMatcher("/h2-console/**/**"),
+            new AntPathRequestMatcher("/api/v1/users/**"),
             new AntPathRequestMatcher("/error/**")
     };
 
@@ -64,7 +65,7 @@ public class SecurityConfiguracao {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(ALLOWED_URLS)
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -109,9 +110,9 @@ public class SecurityConfiguracao {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuracao = new CorsConfiguration();
-        configuracao.applyPermitDefaultValues();
-        configuracao.setAllowedMethods(
+        CorsConfiguration config = new CorsConfiguration();
+        config.applyPermitDefaultValues();
+        config.setAllowedMethods(
                 Arrays.asList(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
@@ -122,11 +123,11 @@ public class SecurityConfiguracao {
                         HttpMethod.HEAD.name(),
                         HttpMethod.TRACE.name()));
 
-        configuracao.setExposedHeaders(List.of(HttpHeaders.CONTENT_DISPOSITION));
+        config.setExposedHeaders(List.of(HttpHeaders.CONTENT_DISPOSITION));
 
-        UrlBasedCorsConfigurationSource origem = new UrlBasedCorsConfigurationSource();
-        origem.registerCorsConfiguration("/**", configuracao);
+        UrlBasedCorsConfigurationSource origin = new UrlBasedCorsConfigurationSource();
+        origin.registerCorsConfiguration("/**", config);
 
-        return origem;
+        return origin;
     }
 }

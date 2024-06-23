@@ -21,7 +21,6 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> save(@RequestBody @Valid UserCreationDto userCreationDto) {
         userService.create(userCreationDto);
         return ResponseEntity.status(201).build();
