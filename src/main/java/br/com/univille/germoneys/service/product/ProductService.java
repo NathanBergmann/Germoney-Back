@@ -1,4 +1,4 @@
-package br.com.univille.germoneys.service;
+package br.com.univille.germoneys.service.product;
 
 import br.com.univille.germoneys.entity.Product;
 

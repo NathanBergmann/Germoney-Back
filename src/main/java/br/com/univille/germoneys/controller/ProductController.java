@@ -1,7 +1,8 @@
 package br.com.univille.germoneys.controller;
 
 import br.com.univille.germoneys.entity.Product;
-import br.com.univille.germoneys.service.ProductService;
+import br.com.univille.germoneys.service.product.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "Bearer")
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
@@ -62,6 +64,11 @@ public class ProductController {
 
 
     @PostMapping
+    public ResponseEntity<Product> post(@RequestBody Product product){
+        if (product.getId() != null) return ResponseEntity.badRequest().build();
+
+        service.save(product);
+        return new ResponseEntity<Product>(product, HttpStatus.OK);
     public ResponseEntity<Product> save(@RequestBody Product product){
         if(product.getId() == 0){
             service.save(product);
@@ -97,3 +104,4 @@ public class ProductController {
         return new ResponseEntity<Product>(product,HttpStatus.OK);
     }
 }
+
