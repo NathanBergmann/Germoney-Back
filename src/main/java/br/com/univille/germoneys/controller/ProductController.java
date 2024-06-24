@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,10 +24,42 @@ public class ProductController {
         return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
     }
 
+    @GetMapping("/theyCanBuy")
+    public ResponseEntity<List<Product>> getProductsTheyCanBuy(@RequestParam BigDecimal money){
+        var productList = service.getAll();
+        if (money == null) {
+            return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+        }
+        List<Product> newProductList = new ArrayList<>();
+        for(Product product : productList){
+            if (money.compareTo(product.getPrice()) >= 0) {
+                newProductList.add(product);
+            }
+        }
+        return new ResponseEntity<>(newProductList, HttpStatus.OK);
+    }
+
+    @GetMapping("/theyCantBuy")
+    public ResponseEntity<List<Product>> getProductsTheyCantBuy(@RequestParam BigDecimal money){
+        var productList = service.getAll();
+        if (money == null) {
+            return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+        }
+        List<Product> newProductList = new ArrayList<>();
+        for(Product product : productList){
+            if (money.compareTo(product.getPrice()) < 0) {
+                newProductList.add(product);
+            }
+        }
+        return new ResponseEntity<>(newProductList, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Product product){
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
+
+
 
     @PostMapping
     public ResponseEntity<Product> save(@RequestBody Product product){
