@@ -30,9 +30,9 @@ public class ProductServiceImpl
     }
 
     @Override
-    public Product delete(long id) {
+    public void delete(long id) {
         var product = repository.getById(id);
         repository.delete(product);
-        return product;
+
     }
 }
