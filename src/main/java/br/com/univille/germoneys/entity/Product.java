@@ -23,4 +23,5 @@ public class Product extends BaseEntity {
     private BigDecimal price;
     @Column(nullable = false)
     private Boolean active = true;
+    private byte[] image;
 }

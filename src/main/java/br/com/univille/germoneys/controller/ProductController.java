@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@SecurityRequirement(name = "Bearer")
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
@@ -56,19 +55,22 @@ public class ProductController {
         return new ResponseEntity<>(newProductList, HttpStatus.OK);
     }
 
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Product product){
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
-
-
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
-    public ResponseEntity<Product> post(@RequestBody Product product){
+    public ResponseEntity<Product> post(@RequestBody Product product) {
         if (product.getId() != null) return ResponseEntity.badRequest().build();
 
         service.save(product);
         return new ResponseEntity<Product>(product, HttpStatus.OK);
+    }
+
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Product> save(@RequestBody Product product){
         if(product.getId() == 0){
             service.save(product);
@@ -77,6 +79,7 @@ public class ProductController {
         return ResponseEntity.badRequest().build();
     }
 
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(@PathVariable long id,
                                        @RequestBody Product product){
@@ -88,12 +91,14 @@ public class ProductController {
         oldProduct.setName(product.getName());
         oldProduct.setPrice(product.getPrice());
         oldProduct.setActive(product.getActive());
+        oldProduct.setImage(product.getImage());
 
 
         service.save(oldProduct);
         return new ResponseEntity<Product>(oldProduct, HttpStatus.OK);
     }
 
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> delete(@PathVariable long id){
         var product = service.getById(id);
