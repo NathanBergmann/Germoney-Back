@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
@@ -17,5 +19,8 @@ public class Product extends BaseEntity {
 
     @Column(length = 255,nullable = false)
     private String name;
-    private int price;
+    @Column(nullable = true)
+    private BigDecimal price;
+    @Column(nullable = false)
+    private Boolean active = true;
 }
