@@ -55,6 +55,9 @@ public class SecurityConfig {
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
             new AntPathRequestMatcher("/api/v1/users/**"),
+            new AntPathRequestMatcher("/api/v1/products", "GET"),
+            new AntPathRequestMatcher("/api/v1/products/theyCanBuy"),
+            new AntPathRequestMatcher("/api/v1/products/theyCantBuy"),
             new AntPathRequestMatcher("/error/**")
     };
 
