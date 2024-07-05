@@ -82,6 +82,7 @@ public class ProductController {
         oldProduct.setName(product.getName());
         oldProduct.setPrice(product.getPrice());
         oldProduct.setActive(product.getActive());
+        oldProduct.setImageUrl(product.getImageUrl());
 
 
         service.save(oldProduct);

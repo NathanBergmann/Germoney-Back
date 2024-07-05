@@ -23,4 +23,6 @@ public class Product extends BaseEntity {
     private BigDecimal price;
     @Column(nullable = false)
     private Boolean active = true;
+    @Column(length = 5000,nullable = false)
+    private String imageUrl;
 }
