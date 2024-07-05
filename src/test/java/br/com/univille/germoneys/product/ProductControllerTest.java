@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,7 @@ public class ProductControllerTest {
         Product product = new Product();
         product.setId(1L);
         product.setName("Test Product");
-        product.setPrice(100);
+        product.setPrice(BigDecimal.valueOf(100.00));
 
         when(productService.getById(1L)).thenReturn(product);
 
